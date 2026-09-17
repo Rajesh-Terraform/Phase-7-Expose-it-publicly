@@ -16,14 +16,19 @@ variable "spoke_vpc_cidr" {
   default     = "10.1.0.0/16"
 }
 
-variable "app_name" {
-  description = "Application name"
+variable "hub_role_arn" {
+  description = "IAM role ARN that Terraform can assume in the Hub account"
   type        = string
-  default     = "phase7-app"
 }
 
 variable "app_port" {
   description = "Application port"
   type        = number
   default     = 80
+}
+
+variable "app_name" {
+  description = "Application name"
+  type        = string
+  default     = "phase7-app"
 } 

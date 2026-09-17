@@ -15,6 +15,25 @@ terraform {
   }
 }
 
+# --------------------------------------------------
+# Spoke Account
+# GitHub Actions assumes this account
+# --------------------------------------------------
+
 provider "aws" {
   region = var.aws_region
 }
+
+# --------------------------------------------------
+# Hub Account
+# Terraform assumes a role in the Hub account
+# --------------------------------------------------
+
+provider "aws" {
+  alias  = "hub"
+  region = var.aws_region
+
+  assume_role {
+    role_arn = var.hub_role_arn
+  }
+} 

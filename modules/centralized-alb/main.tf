@@ -1,3 +1,8 @@
+# ============================================================
+# ALB SECURITY GROUP
+# HUB ACCOUNT
+# ============================================================
+
 resource "aws_security_group" "alb" {
   name        = "${var.application_name}-alb-sg"
   description = "Security group for Phase 7 public ALB"
@@ -24,6 +29,11 @@ resource "aws_security_group" "alb" {
   }
 }
 
+
+# ============================================================
+# INTERNET-FACING APPLICATION LOAD BALANCER
+# ============================================================
+
 resource "aws_lb" "this" {
   name               = "${var.application_name}-alb"
   internal           = false
@@ -40,12 +50,19 @@ resource "aws_lb" "this" {
   }
 }
 
+
+# ============================================================
+# TARGET GROUP
+# IP TARGET
+# ============================================================
+
 resource "aws_lb_target_group" "app" {
   name        = "${var.application_name}-tg"
   port        = var.application_port
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = var.hub_vpc_id
+
+  vpc_id = var.hub_vpc_id
 
   health_check {
     enabled             = true
@@ -63,20 +80,32 @@ resource "aws_lb_target_group" "app" {
   }
 }
 
+
+# ============================================================
+# REGISTER SPOKE PRIVATE IP
+# ============================================================
+
 resource "aws_lb_target_group_attachment" "app" {
   target_group_arn = aws_lb_target_group.app.arn
-  target_id        = var.application_ip
-  port             = var.application_port
+
+  target_id = var.application_ip
+
+  port = var.application_port
 }
+
+
+# ============================================================
+# HTTP LISTENER
+# ============================================================
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
-  port              = 80
-  protocol          = "HTTP"
+
+  port     = 80
+  protocol = "HTTP"
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.app.arn
   }
 } 
-

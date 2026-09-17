@@ -1,4 +1,4 @@
-name: Phase 7 - Centralized ALB apply 
+name: Phase 7 - Centralized Public ALB
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::434097521299:role/testingdummy 
+          role-to-assume: arn:aws:iam::434097521299:role/testingdummy
           aws-region: ap-south-1
 
       - name: Setup Terraform
@@ -42,4 +42,4 @@ jobs:
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan   
+        run: terraform apply -auto-approve tfplan
