@@ -1,15 +1,9 @@
 output "nlb_arn" {
-  value = aws_lb.this.arn
+  description = "Network Load Balancer ARN"
+  value       = aws_lb.nlb.arn
 }
 
 output "nlb_dns_name" {
-  value = aws_lb.this.dns_name
-}
-
-output "target_group_arn" {
-  value = aws_lb_target_group.app.arn
-}  
-
-output "arn" {
-  value = aws_lb.this.arn
-}  
+  description = "Network Load Balancer DNS name"
+  value       = aws_lb.nlb.dns_name
+}   

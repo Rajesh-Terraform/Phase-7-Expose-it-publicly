@@ -1,15 +1,14 @@
-output "alb_dns_name" {
-  value = module.public_alb.alb_dns_name
+output "public_alb_dns_name" {
+  description = "Public ALB DNS name"
+  value       = aws_lb.public.dns_name
 }
 
-output "alb_url" {
-  value = "http://${module.public_alb.alb_dns_name}"
+output "public_alb_arn" {
+  description = "Public ALB ARN"
+  value       = aws_lb.public.arn
 }
 
-output "vpc_endpoint_id" {
-  value = module.public_alb.endpoint_id
-}
-
-output "endpoint_ips" {
-  value = module.public_alb.endpoint_ips
+output "target_group_arn" {
+  description = "ALB target group ARN"
+  value       = aws_lb_target_group.app.arn
 }  

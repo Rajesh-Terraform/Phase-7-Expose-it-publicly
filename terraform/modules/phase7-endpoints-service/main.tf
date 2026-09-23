@@ -1,8 +1,8 @@
 resource "aws_vpc_endpoint_service" "this" {
-  acceptance_required        = var.acceptance_required
-  network_load_balancer_arns = var.network_load_balancer_arns
+  acceptance_required        = false
+  network_load_balancer_arns = [var.nlb_arn]
 
   tags = {
-    Name = var.name
+    Name = "phase7-endpoint-service"
   }
-} 
+}    

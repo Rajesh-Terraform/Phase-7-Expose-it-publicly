@@ -1,12 +1,4 @@
-variable "name" {
-  type = string
-}
-
-variable "acceptance_required" {
-  type    = bool
-  default = false
-}
-
-variable "network_load_balancer_arns" {
-  type = list(string)
+variable "nlb_arn" {
+  description = "NLB ARN used by the VPC Endpoint Service"
+  type        = string
 } 

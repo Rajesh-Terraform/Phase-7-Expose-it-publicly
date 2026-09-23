@@ -1,14 +1,30 @@
-variable "name" {
-  description = "Name of the Application Load Balancer"
+variable "vpc_id" {
+  description = "Hub VPC ID"
   type        = string
 }
 
-variable "security_group_ids" {
-  description = "Security group IDs for the ALB"
+variable "public_subnet_ids" {
+  description = "Public subnet IDs for the ALB"
   type        = list(string)
 }
 
-variable "subnet_ids" {
-  description = "Public subnet IDs for the ALB"
+variable "endpoint_subnet_ids" {
+  description = "Private subnet IDs containing the VPC endpoint"
   type        = list(string)
+}
+
+variable "service_name" {
+  description = "VPC Endpoint Service name from spoke"
+  type        = string
+}
+
+variable "allowed_cidr_blocks" {
+  description = "CIDR blocks allowed to access the ALB"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "app_port" {
+  description = "Application port"
+  type        = number
 }  
