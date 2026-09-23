@@ -1,12 +1,12 @@
-variable "nlb_arn" {
-  type = string
-}
-
-variable "hub_account_id" {
+variable "name" {
   type = string
 }
 
 variable "acceptance_required" {
   type    = bool
   default = false
-}  
+}
+
+variable "network_load_balancer_arns" {
+  type = list(string)
+} 

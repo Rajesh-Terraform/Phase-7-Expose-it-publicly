@@ -9,3 +9,7 @@ output "nlb_dns_name" {
 output "target_group_arn" {
   value = aws_lb_target_group.app.arn
 }  
+
+output "arn" {
+  value = aws_lb.this.arn
+}  
