@@ -40,12 +40,7 @@ jobs:
           echo "Checking AWS identity..."
           aws sts get-caller-identity
 
-      # 4. Verify AWS region
-      - name: Verify AWS region
-        run: |
-          echo "AWS Region:"
-          aws configure get region
-
+      
       # 5. Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -73,4 +68,4 @@ jobs:
       # 10. Terraform Apply
       - name: Terraform Apply
         working-directory: terraform/phase7
-        run: terraform apply -auto-approve tfplan  
+        run: terraform apply -auto-approve tfplan    
