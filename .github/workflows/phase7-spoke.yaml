@@ -1,0 +1,78 @@
+name: Phase 7 - Spoke PrivateLink
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "terraform/phase7-spoke/**"
+      - "terraform/modules/phase7-nlb/**"
+      - "terraform/modules/phase7-endpoint-service/**"
+      - ".github/workflows/phase7-spoke.yaml"
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  phase7-spoke:
+    name: Phase 7 - Spoke PrivateLink
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.SPOKE_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Verify AWS Identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: terraform/phase7-spoke
+        run: terraform init
+
+      - name: Terraform Format
+        working-directory: terraform/phase7-spoke
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        working-directory: terraform/phase7-spoke
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: terraform/phase7-spoke
+        run: |
+          terraform plan \
+            -out=tfplan \
+            -input=false \
+            -var="aws_region=${{ vars.AWS_REGION }}" \
+            -var="spoke_vpc_id=${{ vars.SPOKE_VPC_ID }}" \
+            -var='spoke_private_subnet_ids=["${{ vars.SPOKE_PRIVATE_SUBNET_1 }}","${{ vars.SPOKE_PRIVATE_SUBNET_2 }}"]' \
+            -var='app_private_ips=["${{ vars.APP_PRIVATE_IP_1 }}","${{ vars.APP_PRIVATE_IP_2 }}"]' \
+            -var="hub_account_id=${{ vars.HUB_ACCOUNT_ID }}"
+
+      - name: Terraform Apply
+        working-directory: terraform/phase7-spoke
+        run: |
+          terraform apply \
+            -input=false \
+            -auto-approve \
+            tfplan
+
+      - name: Show Endpoint Service
+        working-directory: terraform/phase7-spoke
+        run: |
+          terraform output endpoint_service_name 

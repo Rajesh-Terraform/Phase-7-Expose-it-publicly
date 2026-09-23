@@ -1,0 +1,19 @@
+aws_region = "ap-south-1"
+
+hub_vpc_id = "vpc-xxxxxxxxxxxxxxxxx"
+
+hub_public_subnet_ids = [
+  "subnet-xxxxxxxxxxxxxxxxx",
+  "subnet-yyyyyyyyyyyyyyyyy"
+]
+
+hub_private_subnet_ids = [
+  "subnet-aaaaaaaaaaaaaaaaa",
+  "subnet-bbbbbbbbbbbbbbbbb"
+]
+
+spoke_state_bucket = "your-spoke-terraform-state-bucket"
+
+spoke_state_key = "phase7/spoke/terraform.tfstate"
+
+app_port = 80 
