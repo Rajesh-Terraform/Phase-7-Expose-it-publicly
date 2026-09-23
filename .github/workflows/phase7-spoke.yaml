@@ -36,7 +36,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: ${{ secrets.SPOKE_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::434097521299:role/github-actions-terraform-role-v1 
           aws-region: ap-south-1
 
       # ---------------------------------------------
@@ -146,4 +146,4 @@ jobs:
 
           echo ""
           echo "NLB DNS Name:"
-          terraform output -raw nlb_dns_name 
+          terraform output -raw nlb_dns_name  

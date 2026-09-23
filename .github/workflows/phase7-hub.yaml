@@ -35,7 +35,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: ${{ secrets.HUB_ROLE_ARN }}
+          role-to-assume: arn:aws:iam::878962827886:role/Rajesh-devops 
           aws-region: ap-south-1
 
       # ---------------------------------------------
@@ -143,3 +143,4 @@ jobs:
           echo ""
           echo "Application URL:"
           echo "http://$ALB_DNS 
+  
