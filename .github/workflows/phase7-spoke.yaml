@@ -146,4 +146,4 @@ jobs:
 
           echo ""
           echo "NLB DNS Name:"
-          terraform output -raw nlb_dns_name  
+          terraform output -raw nlb_dns_name   
