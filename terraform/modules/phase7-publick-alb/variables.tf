@@ -1,28 +1,14 @@
 variable "name" {
-  type = string
+  description = "Name of the Application Load Balancer"
+  type        = string
 }
 
-variable "vpc_id" {
-  type = string
+variable "security_group_ids" {
+  description = "Security group IDs for the ALB"
+  type        = list(string)
 }
 
-variable "public_subnet_ids" {
-  type = list(string)
-}
-
-variable "endpoint_subnet_ids" {
-  type = list(string)
-}
-
-variable "service_name" {
-  type = string
-}
-
-variable "allowed_cidr_blocks" {
-  type = list(string)
-}
-
-variable "app_port" {
-  type    = number
-  default = 80
-}  
+variable "subnet_ids" {
+  description = "Public subnet IDs for the ALB"
+  type        = list(string)
+} 
